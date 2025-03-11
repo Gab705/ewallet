@@ -58,24 +58,30 @@ class GroupeController extends Controller
     public function storeentreegroupe(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'montant' => 'required|string|min:0.01'
+            'amount' => 'required|numeric|min:0.01'
         ]);
+    
         $user = Auth::user();
-        $groupe = Groupe::first();
-        
-        $groupe->balance += $groupe->balance + $request->amount;
+        $groupe = Groupe::where('user_id', $user->id)->first();
+    
+        if (!$groupe) {
+            return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
+        }
+    
+        $groupe->balance += $request->montant;
         $groupe->save();
-
+    
         Transactiongrou::create([
             'user_id' => $user->id,
+            'groupe_id' => $groupe->id,
             'name' => $request->name,
             'type' => 'entree',
-            'montant' => $request->amount
+            'amount' => $request->amount
         ]);
-
+    
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
     }
-    public function deleteTransaction($id){
+        public function deleteTransaction($id){
         $groupe = Groupe::first();
         $transaction = Transactiongrou::find($id);
         if ($transaction){
