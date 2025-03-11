@@ -63,31 +63,40 @@ class GroupeController extends Controller
         return view('entreegroupe');
     }
     public function storeentreegroupe(Request $request){
+        // Validation des champs
         $request->validate([
             'name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0.01'
+            'montant' => 'required|numeric|min:0.01'
         ]);
     
+        // Récupérer l'utilisateur authentifié
         $user = Auth::user();
+    
+        // Trouver le groupe associé à cet utilisateur
         $groupe = Groupe::where('user_id', $user->id)->first();
     
+        // Vérifier si le groupe existe
         if (!$groupe) {
             return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
         }
     
-        $groupe->balance += $request->amount;
+        // Mettre à jour la balance du groupe
+        $groupe->balance += $request->montant;
         $groupe->save();
     
+        // Enregistrer la transaction dans la table Transactiongrou
         Transactiongrou::create([
             'user_id' => $user->id,
             'groupe_id' => $groupe->id,
             'name' => $request->name,
             'type' => 'entree',
-            'amount' => $request->amount
+            'montant' => $request->montant
         ]);
     
+        // Redirection avec un message de succès
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
     }
+    
         public function deleteTransaction($id){
         $groupe = Groupe::first();
         $transaction = Transactiongrou::find($id);
