@@ -89,7 +89,8 @@ class GroupeController extends Controller
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
     }
         public function deleteTransaction($id){
-        $groupe = Groupe::first();
+        $user = Auth::user();
+        $groupe = Groupe::where('user_id', $user->id)->first();
         $transaction = Transactiongrou::find($id);
         if ($transaction){
             $transaction->delete();
@@ -130,7 +131,7 @@ class GroupeController extends Controller
 
     public function resetTransactiongroupe(){
         $user = Auth::user();
-        $groupe = Groupe::first();	
+        $groupe = Groupe::where('user_id', $user->id)->first();
         $transaction = Transactiongrou::where('user_id', $user->id)->delete();
         $groupe->balance = 0;
         $groupe->save();
