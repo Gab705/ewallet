@@ -65,7 +65,7 @@ class GroupeController extends Controller
     public function storeentreegroupe(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'montant' => 'required|numeric|min:0.01'
+            'amount' => 'required|numeric|min:0.01'
         ]);
     
         $user = Auth::user();
@@ -75,7 +75,7 @@ class GroupeController extends Controller
             return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
         }
     
-        $groupe->balance += $request->montant;
+        $groupe->balance += $request->amount;
         $groupe->save();
     
         Transactiongrou::create([
@@ -83,7 +83,7 @@ class GroupeController extends Controller
             'groupe_id' => $groupe->id,
             'name' => $request->name,
             'type' => 'entree',
-            'montant' => $request->montant
+            'amount' => $request->amount
         ]);
     
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
@@ -104,19 +104,19 @@ class GroupeController extends Controller
     public function majeentreegroupe(Request $request,$id){
         $request->validate([
             'name' => 'required|string|max:255',
-            'montant' => 'required|string|min:0.01'
+            'amount' => 'required|string|min:0.01'
         ]);
         $user = Auth::user();
         $groupe = Groupe::first();
         
-        $groupe->balance += $groupe->balance + $request->montant;
+        $groupe->balance += $groupe->balance + $request->amount;
         $groupe->save();
         $transaction = Transactiongrou::find($id);
         $groupe->update([
             'user_id' => $user->id,
             'name' => $request->name,
             'type' => 'entree',
-            'montant' => $request->montant
+            'amount' => $request->amount
         ]);
 
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
