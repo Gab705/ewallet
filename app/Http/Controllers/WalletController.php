@@ -110,9 +110,12 @@ class WalletController extends Controller
     }
 
     public function delete($id){
+        $user = Auth::user();
         $transaction = Transaction::find($id);
         if ($transaction){
             $transaction->delete();
+            $user->balance -= $transaction->amount;
+            $user->save();	
             return redirect()->route('index')->with('success', 'Votre transaction a bien été supprimée');
         }
     }
