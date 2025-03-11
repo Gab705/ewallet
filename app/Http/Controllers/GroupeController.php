@@ -108,11 +108,12 @@ class GroupeController extends Controller
 
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
     }
-    public function showprofilegroupe(){
+    public function showprofilegroupe() {
         $user = Auth::user();
-        $groupe = Groupe::first();
+        $groupe = Groupe::where('user_id', $user->id)->first();
         return view('profilgroupe', compact('user', 'groupe'));
     }
+    
 
     public function resetTransactiongroupe(){
         $user = Auth::user();
