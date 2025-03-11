@@ -53,7 +53,7 @@ class GroupeController extends Controller
         if (!$groupe) {
             return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
         }
-        $transactionGroupe = Transactiongrou::where('id', $user->id)
+        $transactionGroupe = Transactiongrou::where('user_id', $user->id)
             ->orderBy('created_at', 'DESC')
             ->paginate(8);
         return view('groupeindex', compact('groupe', 'transactionGroupe'));
