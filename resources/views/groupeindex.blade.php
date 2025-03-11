@@ -99,7 +99,7 @@
 
     <div class="flex items-center space-x-4">
         <p class="text-blue-600">
-            {{ $transactionGroupes->amount }}
+            {{ $transactionGroupes->montant }}
         </p>
         <a href="{{ route('majentreegroupe', $transactionGroupes->id) }}">
                 <button type="submit" class="cursor-pointer">

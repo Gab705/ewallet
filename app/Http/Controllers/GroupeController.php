@@ -104,19 +104,19 @@ class GroupeController extends Controller
     public function majeentreegroupe(Request $request,$id){
         $request->validate([
             'name' => 'required|string|max:255',
-            'amount' => 'required|string|min:0.01'
+            'montant' => 'required|string|min:0.01'
         ]);
         $user = Auth::user();
         $groupe = Groupe::first();
         
-        $groupe->balance += $groupe->balance + $request->amount;
+        $groupe->balance += $groupe->balance + $request->montant;
         $groupe->save();
         $transaction = Transactiongrou::find($id);
         $groupe->update([
             'user_id' => $user->id,
             'name' => $request->name,
             'type' => 'entree',
-            'montant' => $request->amount
+            'montant' => $request->montant
         ]);
 
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
