@@ -133,26 +133,36 @@
 
 <script>
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const installButton = document.getElementById('install-button');
-    if (installButton) installButton.style.display = 'block';
 
-    installButton?.addEventListener('click', () => {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            console.log(choiceResult.outcome === 'accepted' ? 'L'utilisateur a accepté l'installation' : 'L'utilisateur a refusé l'installation');
-            deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    console.log('beforeinstallprompt event déclenché');
+
+    const installButton = document.getElementById('install-button');
+    if (installButton) {
+        installButton.style.display = 'block';
+        installButton.addEventListener('click', () => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('L\'utilisateur a accepté l\'installation');
+                } else {
+                    console.log('L\'utilisateur a refusé l\'installation');
+                }
+                deferredPrompt = null;
+            });
         });
-    });
+    }
 });
 
 if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('L\'application est déjà installée');
     const installButton = document.getElementById('install-button');
     if (installButton) installButton.style.display = 'none';
 }
 </script>
+
 
 </body>
 </html>
