@@ -66,7 +66,7 @@
             <div id="install-button" class="cursor-pointer p-3 shadow-md bg-blue-600 text-white rounded-md w-full md:w-1/4 text-center">
                 <p class="flex items-center justify-center">
                     <img src="{{ asset('images/download.png') }}" alt="" class="w-4 mr-2">
-                    <a href="">Installer</a>
+                    <span id="install-button">Installer E-Wallet</span>
                 </p>
             </div>
         </div>
@@ -133,34 +133,20 @@
 
 <script>
 let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    console.log('beforeinstallprompt event déclenché');
-
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
     const installButton = document.getElementById('install-button');
-    if (installButton) {
-        installButton.style.display = 'block';
-        installButton.addEventListener('click', () => {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('L\'utilisateur a accepté l\'installation');
-                } else {
-                    console.log('L\'utilisateur a refusé l\'installation');
-                }
-                deferredPrompt = null;
-            });
+    if (installButton) installButton.style.display = 'block';
+
+    installButton?.addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            console.log(choiceResult.outcome === 'accepted' ? "L'utilisateur a accepté l'installation" : "L'utilisateur a refusé l'installation");
+            deferredPrompt = null;
         });
-    }
+    });
 });
-
-if (window.matchMedia('(display-mode: standalone)').matches) {
-    console.log('L\'application est déjà installée');
-    const installButton = document.getElementById('install-button');
-    if (installButton) installButton.style.display = 'none';
-}
 </script>
 
 
