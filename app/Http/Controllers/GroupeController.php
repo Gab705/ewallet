@@ -93,8 +93,9 @@ class GroupeController extends Controller
         $groupe = Groupe::where('user_id', $user->id)->first();
         $transaction = Transactiongrou::find($id);
         if ($transaction){
-            $transaction->delete();
             $groupe->balance -= $transaction->amount;
+            $groupe->save();
+            $transaction->delete();
             return redirect()->route('showgroupeindex')->with('success', 'Votre transaction a bien été supprimée');
         }
     }
