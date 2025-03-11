@@ -58,7 +58,7 @@ class GroupeController extends Controller
     public function storeentreegroupe(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'amount' => 'required|string|min:0.01'
+            'montant' => 'required|string|min:0.01'
         ]);
         $user = Auth::user();
         $groupe = Groupe::first();
@@ -70,7 +70,7 @@ class GroupeController extends Controller
             'user_id' => $user->id,
             'name' => $request->name,
             'type' => 'entree',
-            'amount' => $request->amount
+            'montant' => $request->amount
         ]);
 
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
@@ -80,8 +80,6 @@ class GroupeController extends Controller
         $transaction = Transactiongrou::find($id);
         if ($transaction){
             $transaction->delete();
-            $groupe->balance -= $transaction->amount;
-            $groupe->save();
             return redirect()->route('showgroupeindex')->with('success', 'Votre transaction a bien été supprimée');
         }
     }
@@ -105,7 +103,7 @@ class GroupeController extends Controller
             'user_id' => $user->id,
             'name' => $request->name,
             'type' => 'entree',
-            'amount' => $request->amount
+            'montant' => $request->amount
         ]);
 
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
