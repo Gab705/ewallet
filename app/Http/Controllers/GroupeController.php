@@ -46,10 +46,15 @@ class GroupeController extends Controller
             return redirect()->route('showgroupeindex')->with('success', 'Connexion réussie !');
         }else return("bonjour");
     }
-    public function showgroupeindex(){
+    public function showgroupeindex() {
         $user = Auth::user();	
-        $groupe = Groupe::first();
-        $transactionGroupe = Transactiongrou::where('user_id', $user->id)->orderBy('created_at', 'DESC')->paginate(8);
+        $groupe = Groupe::where('user_id', $user->id)->first();
+        if (!$groupe) {
+            return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
+        }
+        $transactionGroupe = Transactiongrou::where('groupe_id', $groupe->id)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(8);
         return view('groupeindex', compact('groupe', 'transactionGroupe'));
     }
     public function showentreegroupe(){
