@@ -14,7 +14,7 @@
         @csrf
             <div class="mb-4">
                 <label for="descripttion" class="block text-gray-700">Nom</label>
-                <input type="text" value="{{ $transaction->name }}" name="nom" id="nom" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <input type="text" value="{{ $transaction->name }}" name="name" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
             </div>
             <div class="mb-4">
                 <label for="amount" class="block text-gray-700">Montant</label>
