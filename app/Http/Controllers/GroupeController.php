@@ -39,20 +39,26 @@ class GroupeController extends Controller
     }
     public function connexionGroupe(Request $request) {
         $request->validate([
-            'groupe_id' => 'required|exists:groupes,id',
             'password' => 'required|string'
         ]);
     
-        // Trouver le groupe sélectionné
-        $groupe = Groupe::find($request->groupe_id);
+        $user = Auth::user();
     
-        // Vérifier si le mot de passe est correct
-        if ($groupe && Hash::check($request->password, $groupe->password)) {
+        // Vérifier si l'utilisateur a un groupe associé
+        $groupe = Groupe::where('user_id', $user->id)->first();
+    
+        if (!$groupe) {
+            return back()->withErrors(['error' => 'Aucun groupe trouvé pour cet utilisateur.']);
+        }
+    
+        // Vérifier si le mot de passe correspond
+        if (Hash::check($request->password, $groupe->password)) {
             return redirect()->route('showgroupeindex')->with('success', 'Connexion réussie !');
         } else {
             return back()->withErrors(['password' => 'Mot de passe incorrect']);
         }
     }
+    
     
     public function showgroupeindex() {
         $user = Auth::user();	
