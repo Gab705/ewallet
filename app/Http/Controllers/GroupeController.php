@@ -37,36 +37,16 @@ class GroupeController extends Controller
     public function connectGrou(){
         return view('connectGrou');
     }
-    
     public function connexionGroupe(Request $request) {
+        $user = Auth::user();
         $request->validate([
             'password' => 'required|string'
         ]);
-    
-        // Récupérer l'utilisateur connecté
-        $user = Auth::user();
-    
-        // Vérifier si l'utilisateur appartient à un groupe
-        // Ici, on suppose que l'utilisateur a plusieurs groupes. Nous allons récupérer les groupes de cet utilisateur.
-        $groupe = Groupe::where('user_id', $user->id)->first(); // Sélectionner un groupe lié à l'utilisateur
-    
-        // Si l'utilisateur n'appartient à aucun groupe
-        if (!$groupe) {
-            return back()->withErrors(['error' => 'Aucun groupe trouvé pour cet utilisateur.']);
-        }
-    
-        // Vérifier si le mot de passe correspond au groupe
-        if (Hash::check($request->password, $groupe->password)) {
-            // Si le mot de passe est correct, on redirige vers la page du groupe
-            return redirect()->route('showgroupeindex')->with('success', 'Connexion réussie au groupe!');
-        } else {
-            // Si le mot de passe est incorrect
-            return back()->withErrors(['password' => 'Mot de passe incorrect']);
-        }
+        $groupe = Groupe::where('user_id', $user->id)->first();
+        if ($groupe && Hash::check($request->password, $groupe->password)) {
+            return redirect()->route('showgroupeindex')->with('success', 'Connexion réussie !');
+        }else return("bonjour");
     }
-    
-    
-    
     public function showgroupeindex() {
         $user = Auth::user();	
         $groupe = Groupe::where('user_id', $user->id)->first();
@@ -78,6 +58,7 @@ class GroupeController extends Controller
             ->paginate(8);
         return view('groupeindex', compact('groupe', 'transactionGroupe'));
     }
+    
     public function showentreegroupe(){
         return view('entreegroupe');
     }
