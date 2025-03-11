@@ -94,6 +94,7 @@ class GroupeController extends Controller
         $transaction = Transactiongrou::find($id);
         if ($transaction){
             $transaction->delete();
+            $groupe->balance -= $transaction->amount;
             return redirect()->route('showgroupeindex')->with('success', 'Votre transaction a bien été supprimée');
         }
     }
