@@ -49,7 +49,7 @@ class GroupeController extends Controller
     }
     public function showgroupeindex() {
         $user = Auth::user();	
-        $groupe = Groupe::where('user_id', $user->id)->first();
+        $groupe = Groupe::where('user_id', $user->id)->get();
         if (!$groupe) {
             return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
         }
