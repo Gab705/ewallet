@@ -9,7 +9,7 @@ class Transactiongrou extends Model
 {
     use HasFactory;
     protected $table = 'transactiongroupe';
-    protected $fillable = ['user_id', 'name', 'type', 'amount'];
+    protected $fillable = ['user_id', 'name', 'type', 'montant'];
     public function user(){
         return $this->belongsTo(User::class);
     }
