@@ -11,22 +11,28 @@ class DashboardController extends Controller
 {
     public function showDashboard(){
         $user = Auth::user();
-        $plafond = Plafond::all();
-        $derniereTransaction = Transaction::latest()->take(3)->get();
-        $nbrEntree = Transaction::where('type', 'entrée')->count('type');
-        $nbrSortie = Transaction::where('type','sortie')->count('type');
-        $nbrTransaction = Transaction::count();
-        $totalEntree = (float) Transaction::where('type', 'entrée')->sum('amount');
-        $totalsortie = (float) Transaction::where('type', 'sortie')->sum('amount');
-        $nbralimentation = Transaction::where('categories', 'Alimentation')->count('categories');
-        $nbrtransaport = Transaction::where('categories', 'Transaport')->count('categories');
-        $nbrshopping = Transaction::where('categories', 'Shopping')->count('categories');
-        $nbrdivertissement = Transaction::where('categories', 'Divertissement')->count('categories');
-        $nbrsante = Transaction::where('categories', 'Sante')->count('categories');
-        $nbreducation = Transaction::where('categories', 'Education')->count('categories');
-        $nbrfactures = Transaction::where('categories', 'Factures')->count('categories');
-        $nbrpaiya = Transaction::where('categories', 'Paiya')->count('categories');
-        return view('dashboard', compact("user", "totalEntree", "totalsortie", "nbrEntree", "nbrSortie", "nbrTransaction", "derniereTransaction", 
-        "nbralimentation", "nbrtransaport", "nbrshopping", "nbrdivertissement", "nbrsante", "nbreducation", "nbrfactures", "nbrpaiya", "plafond"));
-    }
+        $plafond = Plafond::where('user_id', $user->id)->get();
+        $derniereTransaction = Transaction::where('user_id', $user->id)->latest()->take(3)->get();
+        $nbrEntree = Transaction::where('user_id', $user->id)->where('type', 'entrée')->count();
+        $nbrSortie = Transaction::where('user_id', $user->id)->where('type', 'sortie')->count();
+        $nbrTransaction = Transaction::where('user_id', $user->id)->count();
+        $totalEntree = (float) Transaction::where('user_id', $user->id)->where('type', 'entrée')->sum('amount');
+        $totalsortie = (float) Transaction::where('user_id', $user->id)->where('type', 'sortie')->sum('amount');
+
+        $nbralimentation = Transaction::where('user_id', $user->id)->where('categories', 'Alimentation')->count();
+        $nbrtransaport = Transaction::where('user_id', $user->id)->where('categories', 'Transaport')->count();
+        $nbrshopping = Transaction::where('user_id', $user->id)->where('categories', 'Shopping')->count();
+        $nbrdivertissement = Transaction::where('user_id', $user->id)->where('categories', 'Divertissement')->count();
+        $nbrsante = Transaction::where('user_id', $user->id)->where('categories', 'Sante')->count();
+        $nbreducation = Transaction::where('user_id', $user->id)->where('categories', 'Education')->count();
+        $nbrfactures = Transaction::where('user_id', $user->id)->where('categories', 'Factures')->count();
+        $nbrpaiya = Transaction::where('user_id', $user->id)->where('categories', 'Paiya')->count();
+
+        return view('dashboard', compact(
+            "user", "totalEntree", "totalsortie", "nbrEntree", "nbrSortie", "nbrTransaction", "derniereTransaction", 
+            "nbralimentation", "nbrtransaport", "nbrshopping", "nbrdivertissement", "nbrsante", "nbreducation", 
+            "nbrfactures", "nbrpaiya", "plafond"
+        ));
+
+}
 }
