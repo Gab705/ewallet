@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="E-Wallet">
+
+    <!-- Icône pour l'écran d'accueil -->
+    <link rel="apple-touch-icon" href="/images/portefeuille (1).png">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="icon" href="images/portefeuille (1).png">
     <link rel="manifest" href="/manifest.json">
