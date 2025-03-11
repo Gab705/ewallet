@@ -2,7 +2,7 @@
     "name": "E-Wallet",
     "short_name": "E-Wallet",
     "description": "Gestion De Transaction",
-    "start_url": "/",
+    "start_url": "https://e-wallet.laravel.cloud/",
     "display": "standalone",
     "background_color": "#1F252E",
     "theme_color": "#1F252E",

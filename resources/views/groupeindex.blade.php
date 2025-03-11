@@ -57,7 +57,7 @@
                     <a href="{{ route('showprofilegroupe') }}">Profil Groupe</a>
                 </p>
             </div>
-            <div class="cursor-pointer p-3 shadow-md bg-blue-600 text-white rounded-md w-full md:w-1/4 text-center">
+            <div id="install-button" class="cursor-pointer p-3 shadow-md bg-blue-600 text-white rounded-md w-full md:w-1/4 text-center">
                 <p class="flex items-center justify-center">
                     <img src="{{ asset('images/download.png') }}" alt="" class="w-4 mr-2">
                     <a href="">Installer</a>
