@@ -76,10 +76,12 @@ class GroupeController extends Controller
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
     }
     public function deleteTransaction($id){
-
+        $groupe = Groupe::first();
         $transaction = Transactiongrou::find($id);
         if ($transaction){
             $transaction->delete();
+            $groupe->balance -= $transaction->amount;
+            $groupe->save();
             return redirect()->route('showgroupeindex')->with('success', 'Votre transaction a bien été supprimée');
         }
     }
