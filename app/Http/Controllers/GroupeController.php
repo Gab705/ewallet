@@ -65,7 +65,7 @@ class GroupeController extends Controller
     public function storeentreegroupe(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0.01'
+            'montant' => 'required|numeric|min:0.01'
         ]);
     
         $user = Auth::user();
@@ -83,7 +83,7 @@ class GroupeController extends Controller
             'groupe_id' => $groupe->id,
             'name' => $request->name,
             'type' => 'entree',
-            'amount' => $request->amount
+            'montant' => $request->montant
         ]);
     
         return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
