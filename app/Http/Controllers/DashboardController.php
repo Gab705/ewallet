@@ -13,10 +13,10 @@ class DashboardController extends Controller
         $user = Auth::user();
         $plafond = Plafond::all();
         $derniereTransaction = Transaction::latest()->take(3)->get();
-        $nbrEntree = Transaction::where('type', 'entree')->count('type');
+        $nbrEntree = Transaction::where('type', 'entrée')->count('type');
         $nbrSortie = Transaction::where('type','sortie')->count('type');
         $nbrTransaction = Transaction::count();
-        $totalEntree = (float) Transaction::where('type', 'entree')->sum('amount');
+        $totalEntree = (float) Transaction::where('type', 'entrée')->sum('amount');
         $totalsortie = (float) Transaction::where('type', 'sortie')->sum('amount');
         $nbralimentation = Transaction::where('categories', 'Alimentation')->count('categories');
         $nbrtransaport = Transaction::where('categories', 'Transaport')->count('categories');
