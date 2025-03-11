@@ -100,30 +100,38 @@ class GroupeController extends Controller
         }
     }
     
-    public function majentreegroupe($id){
-        $transaction = Transactiongrou::find($id);
-        return view('showeditentreegroupe', compact('transaction'));
-    }
-    public function majeentreegroupe(Request $request,$id){
+    public function majeentreegroupe(Request $request, $id) {
         $request->validate([
             'name' => 'required|string|max:255',
-            'amount' => 'required|string|min:0.01'
+            'amount' => 'required|numeric|min:0.01'
         ]);
+    
         $user = Auth::user();
         $groupe = Groupe::where('user_id', $user->id)->first();
-        
-        $groupe->balance += $request->amount;
-        $groupe->save();
+    
+        if (!$groupe) {
+            return redirect()->back()->with('error', 'Aucun groupe trouvé pour cet utilisateur.');
+        }
+    
         $transaction = Transactiongrou::find($id);
+        if (!$transaction) {
+            return redirect()->back()->with('error', 'Transaction introuvable.');
+        }
+    
+        // Ajustement de la balance : Soustraire l'ancienne valeur et ajouter la nouvelle
+        $groupe->balance -= $transaction->montant; // Retirer l'ancien montant
+        $groupe->balance += $request->amount; // Ajouter le nouveau montant
+        $groupe->save();
+    
+        // Mettre à jour la transaction
         $transaction->update([
-            'user_id' => $user->id,
             'name' => $request->name,
-            'type' => 'entree',
             'amount' => $request->amount
         ]);
-
-        return redirect()->route('showgroupeindex')->with('success', 'Enregistrement réussi!');
+    
+        return redirect()->route('showgroupeindex')->with('success', 'Modification réussie!');
     }
+    
     public function showprofilegroupe() {
         $user = Auth::user();
         $groupe = Groupe::where('user_id', $user->id)->first();
