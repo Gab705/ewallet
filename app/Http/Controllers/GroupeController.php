@@ -110,7 +110,7 @@ class GroupeController extends Controller
             'amount' => 'required|string|min:0.01'
         ]);
         $user = Auth::user();
-        $groupe = Groupe::first();
+        $groupe = Groupe::where('user_id', $user->id)->first();
         
         $groupe->balance += $groupe->balance + $request->amount;
         $groupe->save();
