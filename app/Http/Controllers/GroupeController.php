@@ -41,10 +41,12 @@ class GroupeController extends Controller
         $request->validate([
             'password' => 'required|string'
         ]);
-        $groupe = Groupe::first();
-        if ($groupe && Hash::check($request->password, $groupe->password)) {
+        $groupe = Groupe::where('password', Hash::make($request->password))->first();
+        if ($groupe) {
             return redirect()->route('showgroupeindex')->with('success', 'Connexion réussie !');
-        }else return("bonjour");
+        } else {
+            return back()->withErrors(['password' => 'Mot de passe incorrect']);
+        }
     }
     public function showgroupeindex(){
         $user = Auth::user();	
