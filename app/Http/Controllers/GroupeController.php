@@ -115,7 +115,7 @@ class GroupeController extends Controller
         $groupe->balance += $groupe->balance + $request->amount;
         $groupe->save();
         $transaction = Transactiongrou::find($id);
-        $groupe->update([
+        $transaction->update([
             'user_id' => $user->id,
             'name' => $request->name,
             'type' => 'entree',
