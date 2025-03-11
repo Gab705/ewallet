@@ -72,7 +72,7 @@
             <div id="install-button" class="cursor-pointer p-3 shadow-md bg-blue-600 text-white rounded-md w-full md:w-1/4 text-center">
                 <p class="flex items-center justify-center">
                     <img src="{{ asset('images/download.png') }}" alt="" class="w-4 mr-2">
-                    <a href="">Installer</a>
+                    <span id="install-button">Installer E-Wallet</span>
                 </p>
             </div>
         </div>
@@ -146,16 +146,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
     installButton?.addEventListener('click', () => {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
-            console.log(choiceResult.outcome === 'accepted' ? 'L'utilisateur a accepté l'installation' : 'L'utilisateur a refusé l'installation');
+            console.log(choiceResult.outcome === 'accepted' ? "L'utilisateur a accepté l'installation" : "L'utilisateur a refusé l'installation");
             deferredPrompt = null;
         });
     });
 });
-
-if (window.matchMedia('(display-mode: standalone)').matches) {
-    const installButton = document.getElementById('install-button');
-    if (installButton) installButton.style.display = 'none';
-}
 </script>
 
 </body>
