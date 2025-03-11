@@ -112,7 +112,7 @@ class GroupeController extends Controller
         $user = Auth::user();
         $groupe = Groupe::where('user_id', $user->id)->first();
         
-        $groupe->balance += $groupe->balance + $request->amount;
+        $groupe->balance += $request->amount;
         $groupe->save();
         $transaction = Transactiongrou::find($id);
         $transaction->update([
