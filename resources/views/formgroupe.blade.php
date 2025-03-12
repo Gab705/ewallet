@@ -15,18 +15,27 @@
     
     <div class="mb-4">
         <label class="block text-gray-600 text-sm font-medium mb-2">Nom du groupe</label>
-        <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200">
+        <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded-md @error('name') focus:ring focus:ring-blue-200">
+        @error('name')
+            <span class="text-red-500">{{ $message }}</span>
+        @enderror
     </div>
 
     
     <div class="mb-4">
         <label class="block text-gray-600 text-sm font-medium mb-2">Description</label>
-        <textarea name="description" rows="3" class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"></textarea>
+        <textarea name="description" rows="3" class="w-full p-2 border border-gray-300 rounded-md @error('description') focus:ring focus:ring-blue-200"></textarea>
+        @error('description')
+                <span class="text-red-500">{{ $message }}</span>
+        @enderror
     </div>
 
     
         <label class="block text-gray-600 text-sm font-medium mb-2">Montant</label>
-        <input type="number" name="montant" required class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200">
+        <input type="number" name="montant" required class="w-full p-2 border border-gray-300 rounded-md @error('montant') focus:ring focus:ring-blue-200">
+        @error('name')
+                <span class="text-red-500">{{ $message }}</span>
+        @enderror
     </div>
 
     
