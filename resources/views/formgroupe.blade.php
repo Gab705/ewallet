@@ -15,7 +15,7 @@
     
     <div class="mb-4">
         <label class="block text-gray-600 text-sm font-medium mb-2">Nom du groupe</label>
-        <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded-md @error('name') focus:ring focus:ring-blue-200">
+        <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded-md @error('name') border-red-500 @enderror focus:ring focus:ring-blue-200" required>
         @error('name')
             <span class="text-red-500">{{ $message }}</span>
         @enderror
@@ -24,7 +24,7 @@
     
     <div class="mb-4">
         <label class="block text-gray-600 text-sm font-medium mb-2">Description</label>
-        <textarea name="description" rows="3" class="w-full p-2 border border-gray-300 rounded-md @error('description') focus:ring focus:ring-blue-200"></textarea>
+        <textarea name="description" rows="3" class="w-full p-2 border border-gray-300 rounded-md @error('description') border-red-500 @enderror  focus:ring focus:ring-blue-200" required></textarea>
         @error('description')
                 <span class="text-red-500">{{ $message }}</span>
         @enderror
@@ -32,8 +32,8 @@
 
     
         <label class="block text-gray-600 text-sm font-medium mb-2">Montant</label>
-        <input type="number" name="montant" required class="w-full p-2 border border-gray-300 rounded-md @error('montant') focus:ring focus:ring-blue-200">
-        @error('name')
+        <input type="number" name="montant" required class="w-full p-2 border border-gray-300 rounded-md @error('montant') border-red-500 @enderror focus:ring focus:ring-blue-200" required>
+        @error('montant')
                 <span class="text-red-500">{{ $message }}</span>
         @enderror
     </div>
