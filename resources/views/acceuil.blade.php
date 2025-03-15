@@ -48,7 +48,7 @@
 
 <section class="w-full max-w-4xl mx-auto mt-8 px-4 flex-1">
     <div class="shadow-xl p-8 md:p-16 rounded-lg bg-white flex flex-col items-center">
-        <h1 class="text-[35px] font-bold mb-8 text-center">{{ $user->balance }}{{ $user->devise }}</h1>
+        <h1 class="text-[50px] font-bold mb-8 text-center">{{ $user->balance }}{{ $user->devise }}</h1>
 
         <div class="w-full flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
             <div class="cursor-pointer p-3 shadow-md bg-blue-600 text-white rounded-md w-full md:w-1/4 text-center">
