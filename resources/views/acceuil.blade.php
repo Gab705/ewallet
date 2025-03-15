@@ -9,7 +9,7 @@
 
     <!-- Icône pour l'écran d'accueil -->
     <link rel="apple-touch-icon" href="/images/portefeuille (1).png">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/lib/index.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" href="images/portefeuille (1).png">
     <link rel="manifest" href="/manifest.json">
     <title>E-WALLET</title>
